@@ -1,0 +1,48 @@
+Transaction
+A transaction is a group of database operations (CRUD). If any operation fails, the entire process rolls back to the previous state to maintain consistency.
+Example: Banking systems use this to ensure accurate balance updates.
+
+Transaction Flow (Using Try/Catch):
+Try Block:
+Begin Transaction
+Perform CRUD operation 1
+Perform CRUD operation 2
+Perform CRUD operation 3
+Commit Transaction (Saves all changes to the DB if successful)
+Catch Block:
+Rollback (Reverts all changes if an error occurs)
+========================================================================
+# ASCII Workflow of Transaction Operation:
+---------------------------------------------
+Transaction Start  
+      |  
+   Active State  
+      |  
+Partial Commit State ------> Full Commit State ----> Transaction Done  
+      |                                                    
+   Failed State ---------------------> Rollback  
+
+========================================================================
+ACID Properties
+Atomicity:
+Ensures that either all tasks in a transaction are completed, or none are. If any step fails, the entire transaction is rolled back to the original state.
+Example:
+----------------------------sql command -------------------------------
+BEGIN;  
+UPDATE account SET balance = balance - 100 WHERE account_id = 6;  
+COMMIT; // Balance becomes 1300 (1400 - 100)  
+ROLLBACK; // Restores balance to 1400 if needed  
+-----------------------------------------------------------------------
+Consistency:
+Validates that only data matching column constraints and rules can be entered into the database. If there’s a violation, the transaction fails.
+Example: Trying to insert a string into an integer column will cause a validation error.
+
+Isolation:
+Each transaction operates independently of others until it completes. This prevents interference among concurrent transactions.
+Example: Two users working on the same database won't see each other's updates until both transactions are committed.
+
+One user updates a bank balance from one branch, while another user won’t see the change until the transaction is committed.
+Durability:
+Once a transaction is committed, the changes are permanent, even if there’s a system crash afterward.
+Example: After committing, the data remains available and consistent in the database.
+  
