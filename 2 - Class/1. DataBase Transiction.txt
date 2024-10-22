@@ -1,0 +1,66 @@
+#Transiction : 
+--------------
+It's a group of task of DB (CRUD). if any operation failed then rollback previous state. 
+Ex: Banking section use this method for this . 
+
+Use the Try(transiction ORM operation -CRUD)/Catch (rollback)
+
+
+Try: 
+------
+1. Begin Transiction
+2. crud - 1
+3. crud - 2
+4. crud - 3
+end operation 
+-----------
+------------
+-------------
+5. Transiction commit // after crud commit the transiction to the DB. 
+
+Catch: 
+------
+1. Rollback. 
+----------
+End Catch
+
+
+Workflow of the Transiction operation (use ASCII image here . ): 
+---------------------------------------
+#Transiction => Active state => partial commit state => full commit state => transiction Done. 
+             => Faild state => Rollback. 
+
+#ACID: 
+------
+1. Atomicity:
+-------------
+Either full unit of work will be done either rollback is called Atomacity. Compete task of transion is defined as Atomacity. 
+
+
+
+ >>> BEGIN ; 
+ >>> UPDATE account set balance = balance -100 where account_id = 6; //balance = 1400
+ >>> COMMIT ; // balance = 1400 - 100 = 1300
+ >>> Rollback; // Now, balance = 1400 ; 
+
+2. Consistency: 
+-------------
+It's a validation error for column data type . if column data type valid then insert into DB either getting error for fix the column Data Type .
+Data Validation is a Consistency. 
+
+
+3. Isolation : 
+-------------
+ACID oparation is isolated . Every transiction operation is isolated from other transicsion operation. 
+
+when start transiction operation,  each CRUD operation is a part of Isolation before Commit . Until complite the Transiction Life Cycle. 
+
+Example : 2 programmer work on Same DB but their resource not same and crud oparation is different/isolated from each other. 
+One user update balance form one_branch of bank and another user can't see until complete the process. 
+
+#Durability: 
+--------------
+Every Commit is mean that our DB CRUD operation is success and data insert into DB. it's a Durability. Permanently Reflect Transiction Operation.
+
+
+
