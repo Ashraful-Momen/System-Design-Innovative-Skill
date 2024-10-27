@@ -1,0 +1,111 @@
+
+
+# **Database Overview**
+
+### **Yugabyte**: 
+- Supports **SQL + NoSQL** operations.
+
+### **Vector Database**:
+- Used with **matrices** for **ML, AI, and Graph** processing.
+
+---
+
+## **Consistency Models**
+**Consistency** determines how data is presented to users after being saved in the database. There are two approaches:  
+1. **Real-time**: Data appears immediately.  
+2. **Delayed**: Data takes some time to appear.  
+
+---
+
+### **1. Immediate Consistency**  
+- **Use Case**:  
+  - Banking systems (real-time payments).  
+  - Stock trading, Financial apps.  
+- **Behavior**:  
+  - Data is **replicated immediately** to all replicas.  
+- **Databases**:  
+  - PostgreSQL, MySQL  
+
+---
+
+### **2. Eventual Consistency**  
+- **Use Case**:  
+  - Social media uploads (e.g., uploading photos on Facebook).  
+  - Data may take time to appear to other users.  
+- **Behavior**:  
+  - Temporary inconsistencies are **allowed**.  
+- **Databases**:  
+  - MongoDB, DynamoDB (NoSQL)  
+
+---
+
+## **Isolation Levels (How Transactions are Managed)**
+Isolation levels control how the database handles **concurrent transactions** to prevent dirty or inconsistent reads.
+
+```
++------------------------------------------------------------+
+|                Isolation Level and Terminology             |
++------------------------------------------------------------+
+| Dirty Read         | Data read without a commit (unstable) |
+| Non-repeatable Read| Same query returns different results  |
+| Phantom Read       | Rows appear/disappear after commit    |
+| Serializable Read  | Always works with the latest data     |
++------------------------------------------------------------+
+```
+
+### **1. Dirty Read (Uncommitted Read)**  
+- Data is **read without being committed**, meaning other users may see **uncommitted changes**.  
+
+---
+
+### **2. Non-repeatable Read**  
+- **Committed data** can be seen by the user, but **column values may change** when the query is repeated.
+
+---
+
+### **3. Phantom Read**  
+- After a **commit**, users might observe **new rows** appearing or existing rows disappearing.
+
+---
+
+### **4. Serializable Read**  
+- Ensures **multiple users** working on the same data always see the **latest committed values**.
+- **Use Case**:  
+  - Mobile recharge, balance withdrawal systems (ensuring no conflicts).  
+- **How it Works**:
+  1. Query the latest data from the database.
+  2. Use `BEGIN ISOLATION LEVEL SERIALIZABLE;` to ensure the operation is consistent.
+  3. If another user updates the data, the operation will **fail until committed**.
+
+---
+
+## **ASCII Diagram of Consistency vs Isolation**
+
+```
++--------------------+----------------------------------+
+| Consistency Model  | Example                         |
++--------------------+----------------------------------+
+| Immediate          | Bank transaction                |
+|                    | Real-time balance update        |
++--------------------+----------------------------------+
+| Eventual           | Social media posts              |
+|                    | Delayed photo visibility        |
++--------------------+----------------------------------+
+
++--------------------+----------------------------------+
+| Isolation Level    | Behavior                        |
++--------------------+----------------------------------+
+| Dirty Read         | Uncommitted data is visible     |
++--------------------+----------------------------------+
+| Non-repeatable     | Column values change on re-read |
++--------------------+----------------------------------+
+| Phantom Read       | Rows may appear or disappear    |
++--------------------+----------------------------------+
+| Serializable       | Always uses latest committed    |
+|                    | Blocks conflicting operations   |
++--------------------+----------------------------------+
+```
+
+---
+
+This version corrects your notes and provides more clarity while maintaining the original intent. Let me know if you need any further adjustments!
