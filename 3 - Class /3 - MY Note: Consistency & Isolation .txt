@@ -1,0 +1,39 @@
+#DataBase Name : 
+-------------------
+#Yugabyte : support (Sql + non-sql). 
+#Vector DB : use with matrix for ML, AI, Graph etc . 
+
+============================================================
+
+#Consistency: when Data save to DB then show user in 2 way => 1. real time , 2. dely show data to user. 
+
+
+#immediate Consistency: 
+    -Usecase: Use banking system (live time payment update).Stock trending , Financial Apps. 
+    -Data ability : immediately replication of data . 
+    -DB : Postgresql, Mysql 
+
+
+#Eventual Consistency : 
+    -Usecase: upload image on Facebook . then show the other users . use social media. 
+    -Data ability : Allow temorary inconsistency . 
+    -DB : MongoDB , Dynamodb (NoSql DB )
+
+=========================================
+
+#Isolation: (check DB is it support dirty read)
+----------------
+    \terminology => 1. Dirty Read (if data save in db then show data without commit) (indicate uncomitted data to the users. )
+                 => 2. Non-repeatable Read . (only commit data can show the user *** column value change)
+                 => 3. phantom read (after commit user can show increate or decreate ***row )
+
+                 => uncomitted read (Dirty read)
+
+                 => unrepeatable/commimt read ()
+
+
+                 => 4. Serializeable read : (*******)(if multiple user work same data  then alway work with latest column value. Mobile recharge, withdraw balance for multiple users)
+                                        -> Take latest data form dataBase then update the column data .  
+                                        -> BEGIN ISOLATION LEVEL SERIALIZABLE; (command for serialize data)
+                                        -> then update column value . 
+                                        -> if column value change then getting error until commit by user. 
